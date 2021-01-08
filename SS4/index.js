@@ -15,7 +15,10 @@ async function getOneDocument() {
 }
 // Read multi
 async function getManyDocument() {
-  const res = await firebase.firestore().collection('users').get()
+  // const res = await firebase.firestore().collection('users')
+  // .where('age', '==', 18).get()
+  const res = await firebase.firestore().collection('users')
+  .where('emails', 'array-contains', 'email1').get()
   const users = getDataFromDocs(res.docs)
   console.log(users)
 }
@@ -34,11 +37,21 @@ function getDataFromDocs(docs) {
   // return docs.map(getDataFromDoc)
 }
 // add document
-addDocument()
+// addDocument()
 function addDocument() {
   const dataToAdd = {
     name: 'ABC',
     address: 'HN',
   }
   firebase.firestore().collection('users').add(dataToAdd)
+}
+updateDocument()
+// update document
+function updateDocument() {
+  const idUpdate = 'yBQHzarsGY4aPcI9OgHO'
+  const dataToUpdate = {
+    address: 'TPHCM'
+  }
+  firebase.firestore().collection('users')
+  .doc(idUpdate).update(dataToUpdate)
 }
