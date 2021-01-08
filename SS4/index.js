@@ -48,10 +48,18 @@ function addDocument() {
 updateDocument()
 // update document
 function updateDocument() {
-  const idUpdate = 'yBQHzarsGY4aPcI9OgHO'
+  const idUpdate = 'kD9qZ09XZu14CdSmemV6'
   const dataToUpdate = {
-    address: 'TPHCM'
+    phones: firebase.firestore.FieldValue.arrayUnion('0890'),
+    name: firebase.firestore.FieldValue.delete(),
   }
   firebase.firestore().collection('users')
   .doc(idUpdate).update(dataToUpdate)
+}
+deleteDocument()
+// delete document
+function deleteDocument() {
+  const docId = 'xsjdeHeR1RITEgGIp1Qd'
+  firebase.firestore().collection('users')
+  .doc(docId).delete()
 }
