@@ -56,7 +56,7 @@ function updateDocument() {
   firebase.firestore().collection('users')
   .doc(idUpdate).update(dataToUpdate)
 }
-deleteDocument()
+// deleteDocument()
 // delete document
 function deleteDocument() {
   const docId = 'xsjdeHeR1RITEgGIp1Qd'
