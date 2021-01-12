@@ -44,6 +44,8 @@ class RegisterScreen extends HTMLElement{
       const pass = this._shadowRoot.getElementById('pass').value
       firebase.auth().createUserWithEmailAndPassword(email, pass)
     })
+    console.log('vao dayyy')
   }
+  connectedCallback() 
 }
 window.customElements.define('register-screen', RegisterScreen)
