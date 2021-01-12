@@ -40,12 +40,16 @@ class RegisterScreen extends HTMLElement{
     this._shadowRoot.getElementById('register-form')
     .addEventListener('submit', (e) => {
       e.preventDefault()
+      const name = this._shadowRoot.getElementById('name').value
       const email = this._shadowRoot.getElementById('email').value
       const pass = this._shadowRoot.getElementById('pass').value
-      firebase.auth().createUserWithEmailAndPassword(email, pass)
+      const confirmPass = this._shadowRoot.getElementById('confirm-pass').value
+      if (name.trim() === '') {
+        this._shadowRoot.getElementById('name')
+        .setAttribute('error', 'Please input full name')
+      }
+      // firebase.auth().createUserWithEmailAndPassword(email, pass)
     })
-    console.log('vao dayyy')
   }
-  connectedCallback() 
 }
 window.customElements.define('register-screen', RegisterScreen)
