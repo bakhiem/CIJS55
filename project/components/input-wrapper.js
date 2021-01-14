@@ -36,8 +36,5 @@ class InputWrapper extends HTMLElement{
   set value(value) {
     this._shadowDom.querySelector('input').value = value
   }
-  setErr(err) {
-    this._shadowDom.querySelector('.error').innerText = err
-  }
 }
 window.customElements.define('input-wrapper', InputWrapper)
