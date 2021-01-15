@@ -1,7 +1,7 @@
 import './screens/register-screen.js'
 import './screens/login-screen.js'
 import './components/input-wrapper.js'
-redirect('register')
+import './screens/story-screen.js'
 export function redirect(screenName){
   if(screenName === 'login') {
     document.querySelector('#app')
@@ -14,3 +14,23 @@ export function redirect(screenName){
     .innerHTML = `<story-screen></story-screen>`
   }
 }
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    // vao story
+    if(!user.emailVerified) {
+      alert('Please verify email')
+      redirect('login')
+      return
+    } else {
+      window.currentUser = {
+        id: user.uid,
+        email: user.email,
+        displayName: user.displayName
+      }
+      redirect('story')
+    }
+  } else {
+    // vao login
+    redirect('login')
+  }
+})
