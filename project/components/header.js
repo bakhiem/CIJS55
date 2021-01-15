@@ -1,10 +1,12 @@
 const style = `
-  display: flex;
-  justify-content: space-between;
-  background: #0097A7;
-  align-items: center;
-  height: 64px;
-  padding: 0 50px;
+  .header{
+    display: flex;
+    justify-content: space-between;
+    background: #0097A7;
+    align-items: center;
+    height: 64px;
+    padding: 0 50px;
+  }
 `
 class Header extends HTMLElement{
   constructor() {
