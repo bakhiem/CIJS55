@@ -4,6 +4,8 @@ class StoryScreen extends HTMLElement{
     this._shadowRoot = this.attachShadow({mode:"open"})
     this._shadowRoot.innerHTML = `
       <story-header></story-header>
+      <create-post></create-post>
+      <list-post></list-post>
     `
   }
 }

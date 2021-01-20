@@ -1,19 +1,43 @@
-class ListPost extends HTMLElement{
+
+const style = `
+  .list-posts {
+    width: 60%;
+    margin: auto;
+    margin-top: 10px;
+  }
+`
+import { getDataFromDocs, getDataFromDoc } from "../utils.js";
+class ListPost extends HTMLElement {
   constructor() {
-    super()
+    super();
     this._shadowDom = this.attachShadow({mode: 'open'})
-    // lay cac bai viet ve
-    const arr = [{
-      content,
-      authorName
-    }]
-    // in ra man hinh
+    this.renderHtml()
+  }
+  async renderHtml() {
+    const res = 
+    await firebase
+    .firestore()
+    .collection('posts')
+    .get()
+    const listPost = getDataFromDocs(res)
+    // listPost[0].user.get()
     let html = ''
-    for(item of arr) {
-      html += ' <post-item content authorName>'
-    }
+    listPost.forEach(element => {
+      html += `
+        <post-item
+          time="${element.createdAt}"
+          author="${element.authorName}"
+          content="${element.content}">
+        </post-item>
+      `
+    })
     this._shadowDom.innerHTML = `
-      ${html}
+      <style>
+        ${style}
+      </style>
+      <div class="list-posts">
+        ${html}
+      </div>
     `
   }
 }
