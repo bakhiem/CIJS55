@@ -18,6 +18,7 @@ const style = `
     border-radius: 5px;
   }
 `;
+import { uploadFile } from "../utils.js"
 class CreatePost extends HTMLElement {
   constructor() {
     super();
@@ -28,6 +29,7 @@ class CreatePost extends HTMLElement {
       </style>
       <div id="create-post">
         <textarea id="content" rows="6"></textarea>
+        <input id="file" type="file">
         <button id="post">Post</button>
       </div>
     `;
@@ -37,14 +39,20 @@ class CreatePost extends HTMLElement {
       if (content.trim() === "") {
         alert("Vui lòng nhập nội dung bài viết");
       }
+      const file = this._shadowDom.getElementById("file")
+      if (file.files.length > 0) {
+        const fileUrl = await uploadFile(file.files[0])
+        console.log(fileUrl)
+      }
+      console.log(file.files)
       const data = {
         createdBy: currentUser.id,
         createdAt: new Date().toISOString(),
         content: content,
         authorName: currentUser.displayName,
       };
-      await firebase.firestore().collection("posts").add(data);
-      this._shadowDom.getElementById("content").value = "";
+      // await firebase.firestore().collection("posts").add(data);
+      // this._shadowDom.getElementById("content").value = "";
     });
   }
 }

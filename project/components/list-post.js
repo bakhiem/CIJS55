@@ -1,43 +1,31 @@
+import { getDataFromDocs } from '../utils.js'
 
 const style = `
-  .list-posts {
+  .container{
     width: 60%;
     margin: auto;
-    margin-top: 10px;
   }
 `
-import { getDataFromDocs, getDataFromDoc } from "../utils.js";
-class ListPost extends HTMLElement {
+class ListPost extends HTMLElement{
   constructor() {
-    super();
-    this._shadowDom = this.attachShadow({mode: 'open'})
+    super()
+    this._shadowRoot = this.attachShadow({mode:"open"})
     this.renderHtml()
   }
   async renderHtml() {
-    const res = 
-    await firebase
-    .firestore()
-    .collection('posts')
-    .get()
-    const listPost = getDataFromDocs(res)
-    // listPost[0].user.get()
+    const res = await firebase.firestore().collection('posts').get()
+    this.listPost = getDataFromDocs(res.docs)
     let html = ''
-    listPost.forEach(element => {
-      html += `
-        <post-item
-          time="${element.createdAt}"
-          author="${element.authorName}"
-          content="${element.content}">
-        </post-item>
-      `
-    })
-    this._shadowDom.innerHTML = `
-      <style>
-        ${style}
-      </style>
-      <div class="list-posts">
-        ${html}
-      </div>
+    for (const item of this.listPost) {
+      html += `<post-item content="${item.content}" author="${item.author}"></post-item>`
+    }
+    this._shadowRoot.innerHTML = `
+    <style>
+      ${style}
+    </style>
+    <div class="container">
+      ${html}
+    </div>
     `
   }
 }

@@ -7,7 +7,22 @@ export function getDataFromDoc(doc) {
   data.id = doc.id
   return data
 }
-// lay du lieu tu get many document
-export function getDataFromDocs(data) {
-  return data.docs.map(getDataFromDoc)
+export function getDataFromDocs(docs) {
+  return docs.map(getDataFromDoc)
+}
+export function uploadFile (file){
+  // tao duong dan den file
+  const fileName = file.name
+  const filePath = `files/${fileName}`
+  // tro den duong dan do
+  const fileRef = firebase.storage().ref().child(filePath)
+  // day file len duong dan day
+  return fileRef.put(file).then(() => {
+    // sau khi xong thi lay url
+    return getFileUrl(fileRef)
+  })
+}
+
+function getFileUrl(fileRef) {
+  return `https://firebasestorage.googleapis.com/v0/b/${fileRef.bucket}/o/${encodeURIComponent(fileRef.fullPath)}?alt=media`
 }
