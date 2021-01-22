@@ -40,19 +40,19 @@ class CreatePost extends HTMLElement {
         alert("Vui lòng nhập nội dung bài viết");
       }
       const file = this._shadowDom.getElementById("file")
+      let fileUrl = ''
       if (file.files.length > 0) {
-        const fileUrl = await uploadFile(file.files[0])
-        console.log(fileUrl)
+        fileUrl = await uploadFile(file.files[0])
       }
-      console.log(file.files)
       const data = {
         createdBy: currentUser.id,
         createdAt: new Date().toISOString(),
         content: content,
         authorName: currentUser.displayName,
+        image: fileUrl
       };
-      // await firebase.firestore().collection("posts").add(data);
-      // this._shadowDom.getElementById("content").value = "";
+      await firebase.firestore().collection("posts").add(data);
+      this._shadowDom.getElementById("content").value = "";
     });
   }
 }
