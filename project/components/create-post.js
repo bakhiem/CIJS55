@@ -17,6 +17,11 @@ const style = `
     padding: 10px 15px;
     border-radius: 5px;
   }
+  @media screen and (max-width: 768px) {
+    #create-post{
+      width: 80%;
+    }
+  }
 `;
 import { uploadFile } from "../utils.js"
 class CreatePost extends HTMLElement {
